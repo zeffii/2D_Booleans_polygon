@@ -25,6 +25,12 @@ polygonorientation = {
     (0, 0): {'AnB': SM, 'AuB': SM, 'A-B': OP, 'B-A': OP}
 }
 
+''' Table 2 '''
+
+# fragmenttype [ polygonAtype, polygonBtype, oper, polygon]
+fragmenttype
+
+
 
 def polygon_operation(Oper, Reg, A, B, Atype, Btype, Out):
 
@@ -51,18 +57,53 @@ def polygon_operation(Oper, Reg, A, B, Atype, Btype, Out):
              lower endpoint, a counter is incremented.
         When all edges are checked, the procedure returns 'inside' if
         the counter is an odd number or 'outside' if the counter is even.
+        """
+        ...
 
+
+    def insertV(dsv, point, io_type):
+        ''' 3rd param enum [inside, outside, boundary]
+        inserts into the vertex ring, DSV, the point, with the type
+        io_type.
+        '''
+        ...
+
+    def insertE(fragment, reg):
+        """ Inserts an edge frament into the edge fragments table, EF, if
+        it is not already there. If regular output result polygons are
+        required and non-boundary edge fragment is to be inserted, the
+        procedure checks whether the same edge fragment with the opposite
+        direction is already in EF, if So. it does not insert the
+        edge-fragment and it deletes the existing edge fragment with
+        the opposite direction from the edge fragments table
+        """
+        ...
+
+    def deleteE(fragment):
+        """ Deletes an edge fragment from edge fragments table """
+        ...
+
+    def search_nextE(point):
+        """ Searches and returns from the edge fragments table an edge fragment
+        whose first endpoint is point
+        """
+        ...
+
+    def organizeE():
+        """ organizes the edge fragments table to allow fast search
+        and deletion operations """
+        ...
+
+    def find_orientation(polygon):
+        """ returns 'clockwise' or 'counterclockwise'. CW / CCW 
+        it finds the vertex with the minimum X value and compares the slopes
+        of the two edges attached to this vertex in order to find the 
+        orientation
         """
         ...
 
     def change_orientation(polygon):
-        ...
-
-    def find_orientation(polygon):
-        ...
-
-    def insertV(v, polygon, inside_outside):
-        ''' 3rd param is a bool '''
+        """ self explanatory, reverses vertices """
         ...
 
     ''' Find and set the orientations of the input polygons '''
