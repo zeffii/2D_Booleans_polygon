@@ -12,27 +12,53 @@ head but won't know until attempted.
 """
 
 
+''' Table 1 '''
+
 # 1 = island
 # 0 = hole
 SM = "same"
 OP = "opposite"
 polygonorientation = {
-    (1, 1): {'AnB': SM, 'AuB': SM, 'A-B': SM, 'B-A': OP},
-    (1, 0): {'AnB': SM, 'AuB': OP, 'A-B': SM, 'B-A': SM},
-    (0, 1): {'AnB': OP, 'AuB': SM, 'A-B': SM, 'B-A': SM},
-    (0, 0): {'AnB': SM, 'AuB': SM, 'A-B': OP, 'B-A': SM}
+    (1, 1): {'AnB': SM, 'AuB': SM, 'A-B': OP, 'B-A': OP},
+    (1, 0): {'AnB': OP, 'AuB': OP, 'A-B': SM, 'B-A': SM},
+    (0, 1): {'AnB': OP, 'AuB': OP, 'A-B': SM, 'B-A': SM},
+    (0, 0): {'AnB': SM, 'AuB': SM, 'A-B': OP, 'B-A': OP}
 }
 
 
 def polygon_operation(Oper, Reg, A, B, Atype, Btype, Out):
 
+    def find_intersection(segment_one, segment_two, point):
+        """
+        original:
+          return True if the two line segments intersect
+          False otherwise. If intersection then point is given
+          the coordinate
+        interpretation:
+          return [] if no intersection and [x, y] if there is one.
+        """
+        ...
+
+    def inside_polygon(v, polygon):
+        """
+        finds and returns the following
+        - whether the v is inside or outside the boundary of polygon
+        - check for every edge of polygon if point on the edge
+        - 1] and if not, whether the edge intersects with a ray that
+          -  begins at the point v and is directed in the X-axis direction
+        - 2] if point v is on the edge, the function returns 'boundary'
+             If the edge intersects with the raw, except at the edge's
+             lower endpoint, a counter is incremented.
+        When all edges are checked, the procedure returns 'inside' if
+        the counter is an odd number or 'outside' if the counter is even.
+
+        """
+        ...
+
     def change_orientation(polygon):
         ...
 
     def find_orientation(polygon):
-        ...
-
-    def insidepolygon(v, polygon):
         ...
 
     def insertV(v, polygon, inside_outside):
@@ -53,9 +79,9 @@ def polygon_operation(Oper, Reg, A, B, Atype, Btype, Out):
     ''' Initiate the verts rings and classify the vertices '''
 
     for v in A:
-        insertV(AV, v, insidepolyon(v, B))
+        insertV(AV, v, inside_polyon(v, B))
 
     for v in B:
-        insertV(BV, v, insidepolyon(v, A))
+        insertV(BV, v, inside_polyon(v, A))
 
     ''' Find intersections '''
