@@ -12,10 +12,16 @@ head but won't know until attempted.
 """
 
 
-''' Table 1 '''
+''' Table 1 --------------------------------------------------
+  1 = island, 0 = hole
 
-# 1 = island
-# 0 = hole
+  polygonorientation [polygonAtype, polygonBtype, oper]
+
+  contains indicators which specify whether the two input polygons should have
+  the same or opposite orientations according to the oper. and polygon types.
+
+'''
+
 SM = "same"
 OP = "opposite"
 polygonorientation = {
@@ -25,10 +31,47 @@ polygonorientation = {
     (0, 0): {'AnB': SM, 'AuB': SM, 'A-B': OP, 'B-A': OP}
 }
 
-''' Table 2 '''
+''' Table 2 --------------------------------------------------
 
-# fragmenttype [ polygonAtype, polygonBtype, oper, polygon]
-fragmenttype
+  fragmenttype [ polygonAtype, polygonBtype, oper, polygon]
+
+  contains the type of edge fragments, besides the boundary line fragments,
+  to be selected for insertion into the line fragments table according to the
+  operations and the polygon types.
+'''
+IO = ['inside', 'outside']
+OI = ['outside', 'inside']
+II = ['inside', 'inside']
+OO = ['outside', 'outside']
+
+fragmenttype = {
+    (1, 1): {'AnB': II, 'AuB': OO, 'A-B': OI, 'B-A': IO},
+    (1, 0): {'AnB': OI, 'AuB': IO, 'A-B': II, 'B-A': OO},
+    (0, 1): {'AnB': IO, 'AuB': OI, 'A-B': OO, 'B-A': II},
+    (0, 0): {'AnB': OO, 'AuB': II, 'A-B': IO, 'B-A': OI}
+}
+
+''' Table 3 --------------------------------------------------
+
+  boundaryfragment [polygonAtype, polygonBtype, situation, oper, reg]
+
+  contains indicators which specifies how many boundary edge fragments
+  are to be selected given the edge fragments situation for regular and
+  non-regular operations. The table is according to the operation and the
+  polygon types.
+
+'''
+
+
+
+...
+
+''' Table 4 --------------------------------------------------
+
+  resltorientation [polygonAtype, polygonBtype, oper]
+
+'''
+
 
 
 
