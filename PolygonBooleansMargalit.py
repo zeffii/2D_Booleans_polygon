@@ -79,6 +79,8 @@ def polygon_operation(Oper, Reg, A, B, Atype, Btype, Out):
 
     def find_intersection(segment_one, segment_two, point):
         """
+        https://stackoverflow.com/a/19550879/1243487
+
         original:
           return True if the two line segments intersect
           False otherwise. If intersection then point is given
@@ -86,7 +88,37 @@ def polygon_operation(Oper, Reg, A, B, Atype, Btype, Out):
         interpretation:
           return [] if no intersection and [x, y] if there is one.
         """
-        ...
+        (p0, p1), (p2, p3) = segment_one, segment_two
+
+        segment_one_dx = p1[0] - p0[0]
+        segment_one_dy = p1[1] - p0[1]
+        segment_two_dx = p3[0] - p2[0]
+        segment_two_dy = p3[1] - p2[1]
+
+        denom = (segment_one_dx * segment_two_dy) - (segment_two_dx * segment_one_dy)
+
+        if denom == 0:
+            return [] # collinear
+
+        denom_is_positive = denom > 0
+        s02_x = p0[0] - p2[0]
+        s02_y = p0[1] - p2[1]
+        s_numer = segment_one_dx * s02_y - segment_one_dy * s02_x
+
+        if (s_numer < 0) == denom_is_positive:
+            return [] # no collision
+
+        t_numer = segment_two_dx * s02_y - segment_two_dy * s02_x
+
+        if (t_numer < 0) == denom_is_positive:
+            return [] # no collision
+
+        if (s_numer > denom) == denom_is_positive or (t_numer > denom) == denom_is_positive:
+            return [] # no collision
+
+        t = t_numer / denom
+        return [ p0[0] + (t * segment_one_dx), p0[1] + (t * segment_one_dy) ]
+
 
     def inside_polygon(v, polygon):
         """
